@@ -3,4 +3,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$',views.listar_pub), #se redirecciona a la url del blog
+    url(r'^postea/(?P<pk>[0-9]+)/$', views.detalle_pub, name = 'postea'), #se redirecciona a la url del blog
+
 ]
