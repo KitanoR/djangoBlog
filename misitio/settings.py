@@ -25,8 +25,9 @@ SECRET_KEY = 'so-18prtqprk&zap4-_0iq#7h)2h&7_8jl&_2oj2*yo7x($ei0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kikabr.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['kikabr.pythonanywhere.com','127.0.0.1','localhost']
 
+LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 

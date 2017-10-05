@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Publicacion
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def listar_pub(request):
     pub = Publicacion.objects.filter(fecha_publicacion__lte=timezone.now()).order_by('fecha_publicacion');
@@ -9,6 +10,7 @@ def listar_pub(request):
 def detalle_pub(request,pk):
     p= get_object_or_404(Publicacion, pk=pk)
     return render(request, 'blog/detalle_publicacion.html',{'p':p})
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -21,7 +23,7 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
-
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(Publicacion, pk=pk)
     if request.method == "POST":
@@ -34,13 +36,16 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+@login_required
 def post_draft_list(request):
     posts = Publicacion.objects.filter(fecha_publicacion__isnull=True).order_by('fecha_creacion')
     return render(request, 'blog/post_borradores.html', {'posts': posts})
+@login_required
 def publicar_post(request, pk):
     post = get_object_or_404(Publicacion, pk=pk)
     post.publicar()
     return redirect('postea', pk=pk)
+@login_required
 def eliminar_post(request, pk):
     post = get_object_or_404(Publicacion, pk = pk)
     post.delete()
